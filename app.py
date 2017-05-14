@@ -156,7 +156,7 @@ def broadcast():
       "Content-Type": "application/json"
   }
   data = json.dumps({
-      "sender_id": sender_id,
+      "seller_messenger_id": sender_id,
       "sender": sender_name,
       "broadcast_item": broadcast_item
   })
