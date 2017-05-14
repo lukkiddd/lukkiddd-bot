@@ -63,6 +63,7 @@ def buyer_get_item():
 			el.append(
 				{
 					"title": item['item_name'],
+					"image_url": item['item_image'],
 					"subtitle": str(datetime.datetime.fromtimestamp(int(item["created_at"])).strftime('%Y-%m-%d %H:%M')) + u"โดย " + item['owner'],
 					"buttons":[
 						{
@@ -74,17 +75,31 @@ def buyer_get_item():
 							"type": "show_block",
 							"block_name": "mgs_b2s",
 							"title": "สนใจ"
+						},
+						{
+							"type":"element_share"
 						}
 					]
 				}
 			)
 		else:
 			break
-	return jsonify(el)
+	message = {
+		"messages": [{
+				"attachment":{
+					"type":"template",
+					"payload":{
+						"template_type":"generic",
+						"elements": el
+					}
+				}
+		}]
+	}
+	return jsonify(message)
 
 @app.route('/api/buyer/msg/send', methods=['GET','POST'])
-def buyer_send_message:
-	
+def buyer_send_message():
+	return ok, 200
 
 
 if __name__ == '__main__':
