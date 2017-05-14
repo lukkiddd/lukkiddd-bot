@@ -132,7 +132,7 @@ def chatroom_notify():
 	}
 	data = json.dumps({
 			"buyer_id": sender_id,
-			"sender": sender_name
+			"sender": sender_name,
 			"chat_item_name": item_name
 	})
 	r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ reciever +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59186b42e4b04ca345dad411", headers=headers, data=data)
