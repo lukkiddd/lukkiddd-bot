@@ -163,6 +163,24 @@ def broadcast():
       else:
         r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ user_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=5918735ce4b04ca345f5a19e", headers=headers, data=data)
 
+@app.route('/api/image', methods=['GET','POST'])
+def gen_image():
+  broadcast_item = request.args.get("broadcast_item")
+  message = {
+    "messages": [
+      {"text": broadcast_item},
+      {
+        "attachment": {
+          "type": "image",
+          "payload": {
+            "url": broadcast_item
+          }
+        }
+      }
+    ]
+  }
+  return jsonify(message)
+
 @app.route('/api/broadcaster/chat/msg/notify', methods=['GET','POST'])
 def broadcast_notify():
   sender_id = request.args.get("messenger user id")
