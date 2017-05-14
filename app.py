@@ -143,5 +143,40 @@ def chatroom_notify():
 	r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ reciever_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59186b42e4b04ca345dad411", headers=headers, data=data)
 
 
+@app.route('/api/broadcast', methods=['GET','POST'])
+def broadcast():
+	sender_id = request.args.get("messenger user id")
+	sender_name = request.args.get("first name")
+	broadcast_item = request.args.get("broadcast_item")
+	users = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/users/').get()
+	headers = {
+			"Content-Type": "application/json"
+	}
+	data = json.dumps({
+			"sender_id": sender_id,
+			"sender": sender_name,
+			"broadcast_item": broadcast_item
+	})
+	for user_key in users:
+		user_id = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/users/' + user_key + '/messenger_user_id').get()
+		r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ user_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=5918735ce4b04ca345f5a19e", headers=headers, data=data)
+
+@app.route('/api/broadcaster/chat/msg/notify', methods=['GET','POST'])
+def broadcast_notify():
+	sender_id = request.args.get("messenger user id")
+	sender_name = request.args.get("first name")
+	reciever_id = request.args.get("seller_messenger_id")
+	item_name = request.args.get("broadcast_item")
+	headers = {
+			"Content-Type": "application/json"
+	}
+	data = json.dumps({
+			"buyer_id": sender_id,
+			"sender": sender_name,
+			"chat_item_name": item_name
+	})
+	r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ reciever_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59186b42e4b04ca345dad411", headers=headers, data=data)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
