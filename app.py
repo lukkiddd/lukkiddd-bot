@@ -144,7 +144,7 @@ def chatroom_notify():
       "chat_item_name": item_name
   })
   r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ reciever_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59186b42e4b04ca345dad411", headers=headers, data=data)
-
+  return ok, 200
 
 @app.route('/api/broadcast', methods=['GET','POST'])
 def broadcast():
@@ -180,7 +180,7 @@ def broadcast_notify():
       "chat_item_name": item_name
   })
   r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ reciever_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59186b42e4b04ca345dad411", headers=headers, data=data)
-
+  return ok, 200
 
 if __name__ == '__main__':
     app.run(debug=True)
