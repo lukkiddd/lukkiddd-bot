@@ -30,7 +30,10 @@ def register():
     'profile_pic': profile_pic,
     'messenger_user_id': messenger_user_id
   })
-  return ok, 200
+  message = [
+    {'text': u'ยินดีต้อนรับนะคะ'}
+  ]
+  return jsonify(message)
 
 @app.route('/api/seller/add_item', methods=['GET','POST'])
 def seller_add_item():
@@ -159,7 +162,8 @@ def broadcast():
   })
   for user_key in users:
     user_id = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/users/' + user_key + '/messenger_user_id').get()
-    r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ user_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=5918735ce4b04ca345f5a19e", headers=headers, data=data)
+    if(user_id != sender_id):
+      r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ user_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=5918735ce4b04ca345f5a19e", headers=headers, data=data)
 
 @app.route('/api/broadcaster/chat/msg/notify', methods=['GET','POST'])
 def broadcast_notify():
