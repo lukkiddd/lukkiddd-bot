@@ -1,2 +1,1 @@
-# airscanner
-AirScanner Bot Project
+# lukkiddd bot
