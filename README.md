@@ -1,2 +1,2 @@
-# lukkiddd-bot
-My bot (Test)
+# airscanner
+AirScanner Bot Project
