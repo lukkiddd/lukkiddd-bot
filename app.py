@@ -102,18 +102,20 @@ def buyer_get_item():
 @app.route('/api/chat/msg/send', methods=['GET','POST'])
 def chatroom():
 	sender_id = request.args.get("messenger user id")
+	sender_name = request.args.get("first name")
 	reciever_id = request.args.get("seller_messenger_id")
 	msg = request.args.get("msg")
-	send_message(sender_id, reciever_id, msg)
+	send_message(sender_id,sender_name, reciever_id, msg)
 	return ok, 200
 
 
-def send_message(sender, reciever, msg):
+def send_message(sender_id, sender_name, reciever, msg):
     headers = {
         "Content-Type": "application/json"
     }
     data = json.dumps({
-        "seller_messenger_id": sender,
+        "seller_messenger_id": sender_id,
+				"sender": sender_name,
 				"msg": msg
     })
     r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ reciever +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=5918677ce4b04ca345cf2d68", headers=headers, data=data)
@@ -122,13 +124,15 @@ def send_message(sender, reciever, msg):
 @app.route('/api/chat/msg/notify', methods=['GET','POST'])
 def chatroom_notify():
 	sender_id = request.args.get("messenger user id")
+	sender_name = request.args.get("first name")
 	reciever_id = request.args.get("seller_messenger_id")
 	item_name = request.args.get("item_name")
 	headers = {
 			"Content-Type": "application/json"
 	}
 	data = json.dumps({
-			"buyer_id": sender,
+			"buyer_id": sender_id,
+			"sender": sender_name
 			"chat_item_name": item_name
 	})
 	r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ reciever +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59186b42e4b04ca345dad411", headers=headers, data=data)
