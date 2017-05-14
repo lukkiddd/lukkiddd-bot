@@ -168,7 +168,6 @@ def gen_image():
   broadcast_item = request.args.get("broadcast_item")
   message = {
     "messages": [
-      {"text": broadcast_item},
       {
         "attachment": {
           "type": "image",
