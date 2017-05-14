@@ -66,7 +66,7 @@ def buyer_get_item():
 		if(item and len(el) < 10):
 			el.append(
 				{
-					"title": item["item_name"],
+					"title": item["item_name"] + item["item_price"] + u" บาท",
 					"image_url": item["item_image"],
 					"subtitle": u"โดย " + item["owner"],
 					"buttons":[
@@ -113,6 +113,11 @@ def send_message(sender_id, sender_name, reciever, msg):
     headers = {
         "Content-Type": "application/json"
     }
+		Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/chat_history/' + sender_id + '/' + reciever_id).push({
+			'recv_id': reciever,
+			'msg': msg,
+			'created_at':str(datetime.datetime.now())
+		})
     data = json.dumps({
         "seller_messenger_id": sender_id,
 				"sender": sender_name,
@@ -135,7 +140,7 @@ def chatroom_notify():
 			"sender": sender_name,
 			"chat_item_name": item_name
 	})
-	r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ reciever +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59186b42e4b04ca345dad411", headers=headers, data=data)
+	r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ reciever_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59186b42e4b04ca345dad411", headers=headers, data=data)
 
 
 if __name__ == '__main__':
