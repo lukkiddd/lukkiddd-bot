@@ -116,11 +116,6 @@ def send_message(sender_id, sender_name, reciever, msg):
     headers = {
         "Content-Type": "application/json"
     }
-    Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/chat_history/' + sender_id + u'/' + reciever_id).push({
-      'recv_id': reciever,
-      'msg': msg,
-      'created_at':str(datetime.datetime.now())
-    })
     data = json.dumps({
         "seller_messenger_id": sender_id,
         "sender": sender_name,
