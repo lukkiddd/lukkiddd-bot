@@ -158,7 +158,10 @@ def broadcast():
   for user_key in users:
     user_id = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/users/' + user_key + '/messenger_user_id').get()
     if(user_id != sender_id):
-      r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ user_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=5918735ce4b04ca345f5a19e", headers=headers, data=data)
+      if("https://scontent" in broadcast_item):
+        r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ user_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59187f88e4b04ca3461dbb0a", headers=headers, data=data)
+      else:
+        r = requests.post("https://api.chatfuel.com/bots/58ccfcdde4b02491f5311c13/users/"+ user_id +"/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=5918735ce4b04ca345f5a19e", headers=headers, data=data)
 
 @app.route('/api/broadcaster/chat/msg/notify', methods=['GET','POST'])
 def broadcast_notify():
