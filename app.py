@@ -47,28 +47,32 @@ def seller_add_item():
 		'item_price': item_price,
 		'created_at':str(datetime.datetime.now())
 	}
-	item = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/item/')
+	item = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/items/')
 	item.push(new_item)
 	message = [
 		{'text': u'เรียบร้อยแล้ว! เดี๋ยวถ้ามีคนสนใจ จะทักไปบอกนะคะ :D'}
 	]
-	return ok, 200
+	return jsonify(message)
 
 @app.route('/api/buyer/get_items', methods=['GET','POST'])
 def buyer_get_item():
-	items = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/items/')
+	items = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/items/').get()
 	el = []
-	for item in items:
-		if(len(el) < 10):
+	if(items == None):
+		return ok, 200
+	for item_key in items:
+		print item_key
+		item = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/items/' + item_key).get()
+		if(item and len(el) < 10):
 			el.append(
 				{
-					"title": item['item_name'],
-					"image_url": item['item_image'],
-					"subtitle": str(datetime.datetime.fromtimestamp(int(item["created_at"])).strftime('%Y-%m-%d %H:%M')) + u"โดย " + item['owner'],
+					"title": item["item_name"],
+					"image_url": item["item_image"],
+					"subtitle": u"โดย " + item["owner"],
 					"buttons":[
 						{
 							"set_attributes": {
-								"seller_messenger_id": item['owner_messenger_id'],
+								"seller_messenger_id": item["owner_messenger_id"],
 								"seller_item": item["item_name"],
 								"seller_item_price": item["item_price"]
 							},
@@ -82,8 +86,6 @@ def buyer_get_item():
 					]
 				}
 			)
-		else:
-			break
 	message = {
 		"messages": [{
 				"attachment":{
