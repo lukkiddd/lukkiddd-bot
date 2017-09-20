@@ -194,7 +194,7 @@ def order():
       {"text": u"เรียบร้อย"}
     ]
   }
-  return jsonify(message)
+  return jsonify(messages)
 
 @app.route('/hbot/order_list', methods=['GET'])
 def order_list():
@@ -206,10 +206,10 @@ def order_list():
   messages = {
     "messages": [
       {"text": u"อ่าาา มี"},
-      {"text": foods }
+      {"text": foods or u"ไม่มีใครสั่งอะไรเลย" }
     ]
   }
-  return jsonify(message)
+  return jsonify(messages)
 
 @app.route('/api/broadcaster/chat/msg/notify', methods=['GET','POST'])
 def broadcast_notify():
