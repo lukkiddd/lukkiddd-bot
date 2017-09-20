@@ -202,7 +202,8 @@ def order_list():
   foods = ""
   if firebase_foods:
     for f in firebase_foods:
-      foods = foods + " " + f
+      food = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/hbot/foods/' + f).get()
+      foods = foods + " " + food['food'] + ","
   messages = {
     "messages": [
       {"text": u"อ่าาา มี"},
