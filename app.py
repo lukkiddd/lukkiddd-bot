@@ -211,6 +211,16 @@ def order_list():
     ]
   }
   return jsonify(messages)
+  
+@app.route('/hbot/order_clear', methods=['GET'])
+def order_clear():
+  Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/hbot/foods').remove()
+  messages = {
+    "messages": [
+      {"text": u"เรียบร้อย"}
+    ]
+  }
+  return jsonify(messages)
 
 @app.route('/api/broadcaster/chat/msg/notify', methods=['GET','POST'])
 def broadcast_notify():
