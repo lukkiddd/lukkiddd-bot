@@ -180,6 +180,37 @@ def gen_image():
   }
   return jsonify(message)
 
+@app.route('/hbot/order', methods=['GET'])
+def order():
+  name = request.args.get('first name')
+  food = request.args.get('my_meal')
+  firebase_food = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/hbot/foods')
+  firebase_food.push({
+    "name": name,
+    "food": food
+  })
+  messages = {
+    "messages": [
+      {"text": u"เรียบร้อย"}
+    ]
+  }
+  return jsonify(message)
+
+@app.route('/hbot/order_list', methods=['GET'])
+def order_list():
+  firebase_foods = Firebase('https://bott-a9c49.firebaseio.com/lukkiddd/hbot/foods').get()
+  foods = ""
+  if firebase_foods:
+    for f in firebase_foods:
+      foods = foods + " " + f
+  messages = {
+    "messages": [
+      {"text": u"อ่าาา มี"},
+      {"text": foods }
+    ]
+  }
+  return jsonify(message)
+
 @app.route('/api/broadcaster/chat/msg/notify', methods=['GET','POST'])
 def broadcast_notify():
   sender_id = request.args.get("messenger user id")
